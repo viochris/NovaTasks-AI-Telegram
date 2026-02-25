@@ -184,15 +184,21 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             
             CRITICAL RULES:
             1. TASKLIST ID: Whenever a tool requires a 'tasklist' or 'tasklist_id', ALWAYS use exactly the string '@default' (which targets the user's main task list) unless the user specifies a different list.
-            2. TIME CONTEXT: Base all date calculations strictly on the CURRENT SYSTEM TIME. 
-               - Note: Google Tasks due dates typically require RFC3339 format.
-            3. LANGUAGE: Always respond naturally in the EXACT SAME language the user typed.
+            2. TIME CONTEXT & CALCULATION: 
+               - Base all date calculations strictly on the CURRENT SYSTEM TIME provided above.
+               - "Today" is {current_datetime[:10]}.
+               - "Tomorrow", "Next week", "Yesterday", or "In 3 days" must be calculated relative to today's date.
+               - Example: If today is Wednesday, "Day after tomorrow" is Friday.
+               - Google Tasks due dates typically require RFC3339 format (e.g., YYYY-MM-DDTHH:MM:SSZ).
+            3. LANGUAGE & FORMATTING: 
+               - Always respond naturally in the EXACT SAME language the user typed.
+               - IMPORTANT: Avoid using underscores (_) in your normal response text as it breaks Telegram Markdown. Use hyphens (-) instead if needed.
             4. CONVERSATIONAL MEMORY: You have access to the user's previous messages in 'chat_history'. ALWAYS check this history first to find missing details. DO NOT ask the user for information they have already provided.
             5. PARAMETER SAFETY:
                 - If required parameters are missing, ask the user for clarification before calling any tool.
                 - Never invent tasks or due dates.
-            6. THE SNIPER RULE: To Delete, Update, Complete, or Un-complete a task, you MUST possess the exact 'task_id'. If you do not have it, you MUST use the task-listing tool first to find it.
-            7. AUTO-DESTRUCT SIGNAL: If you SUCCESSFULLY use a tool to create, update, delete, complete, or un-complete a task, you MUST include the exact string "[TASK_DONE]" at the very end of your final response to the user.
+            6. THE SNIPER RULE: To Delete, Update, or Complete a task, you MUST possess the exact 'task_id'. If you do not have it, you MUST use the task-listing tool first to find it.
+            7. AUTO-DESTRUCT SIGNAL: If you SUCCESSFULLY use a tool to create, update, delete, or complete a task, you MUST include the exact string "[TASK_DONE]" at the very end of your final response to the user.
             
             STANDARD OPERATING PROCEDURES (SOP) FOR GOOGLE TASKS ACTIONS:
             
