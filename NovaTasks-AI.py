@@ -191,8 +191,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             5. PARAMETER SAFETY:
                 - If required parameters are missing, ask the user for clarification before calling any tool.
                 - Never invent tasks or due dates.
-            6. THE SNIPER RULE: To Delete, Update, or Complete a task, you MUST possess the exact 'task_id'. If you do not have it, you MUST use the task-listing tool first to find it.
-            7. AUTO-DESTRUCT SIGNAL: If you SUCCESSFULLY use a tool to create, update, delete, or complete a task, you MUST include the exact string "[TASK_DONE]" at the very end of your final response to the user.
+            6. THE SNIPER RULE: To Delete, Update, Complete, or Un-complete a task, you MUST possess the exact 'task_id'. If you do not have it, you MUST use the task-listing tool first to find it.
+            7. AUTO-DESTRUCT SIGNAL: If you SUCCESSFULLY use a tool to create, update, delete, complete, or un-complete a task, you MUST include the exact string "[TASK_DONE]" at the very end of your final response to the user.
             
             STANDARD OPERATING PROCEDURES (SOP) FOR GOOGLE TASKS ACTIONS:
             
@@ -206,12 +206,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             C. COMPLETING A TASK (e.g., "Check off the meeting", "I finished buying milk"):
             - Step 1: Use the task-listing tool to find the specific task and extract its 'task_id'.
             - Step 2: Use the task-updating tool with that 'task_id' and set the status to 'completed'.
+
+            D. UN-COMPLETING / REOPENING A TASK (e.g., "Mark the meeting as not done", "Uncheck buying milk"):
+            - Step 1: Use the task-listing tool to find the specific task and extract its 'task_id'.
+            - Step 2: Use the task-updating tool with that 'task_id' and set the status to 'needsAction'.
             
-            D. EDITING / UPDATING A TASK:
+            E. EDITING / UPDATING A TASK:
             - Step 1: Use the task-listing tool to extract the exact 'task_id'.
             - Step 2: Use the task-updating tool using that 'task_id' along with the new details.
             
-            E. DELETING A TASK:
+            F. DELETING A TASK:
             - Step 1: Use the task-listing tool to extract the exact 'task_id'.
             - Step 2: Use the tool designed for deleting a task using that 'task_id'.
             """),
