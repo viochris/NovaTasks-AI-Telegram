@@ -1,0 +1,19 @@
+# Telegram Bot Core
+python-telegram-bot>=20.0
+
+# Environment Variables
+python-dotenv
+
+# LangChain & AI Frameworks
+langchain
+langchain-core
+langchain-classic
+langchain-community
+langchain-google-community
+langchain-google-genai
+
+# Google Tasks API Dependencies
+google-auth
+google-auth-httplib2
+google-auth-oauthlib
+google-api-python-client
