@@ -21,9 +21,29 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 load_dotenv()
 
 # Fetch configuration keys from environment variables
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN_Nova_ToDo")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN_Nova_Tasks")
 TELEGRAM_DEVELOPER_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# ==========================================
+# DYNAMIC CREDENTIAL GENERATOR FOR CLOUD DEPLOYMENT (RAILWAY)
+# ==========================================
+# LangChain's CalendarToolkit strictly requires physical 'credentials.json' and 'token.json' files to function.
+# When running locally, these files already exist in your folder, so this code will safely skip execution.
+# However, during cloud deployment (like on Railway), these files are typically ignored via .gitignore for security.
+# This script dynamically generates the required physical files on the server upon startup by pulling the raw JSON data from Railway's Environment Variables.
+
+# 1. Generate 'credentials.json' on the server if it doesn't exist
+creds_env = os.getenv("GOOGLE_CREDENTIALS")
+if creds_env and not os.path.exists("credentials.json"):
+    with open("credentials.json", "w") as f:
+        f.write(creds_env)
+
+# 2. Generate 'token.json' on the server if it doesn't exist
+token_env = os.getenv("GOOGLE_TOKEN")
+if token_env and not os.path.exists("token.json"):
+    with open("token.json", "w") as f:
+        f.write(token_env)
 
 # ==========================================
 # SYSTEM LOGGING SETUP
