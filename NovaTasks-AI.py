@@ -196,16 +196,19 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                - DO NOT use any formatting symbols (NO asterisks *, NO underscores _, NO backticks `, NO bold, NO italics). 
                - Telegram will crash if you use these symbols. Use standard punctuation only. Use hyphens (-) for lists or separators.
             4. CONVERSATIONAL MEMORY: You have access to the user's previous messages in 'chat_history'. ALWAYS check this history first to find missing details. DO NOT ask the user for information they have already provided.
-            5. PARAMETER SAFETY:
-                - If required parameters are missing, ask the user for clarification before calling any tool.
-                - Never invent tasks or due dates.
+            5. PARAMETER SAFETY (MANDATORY DEADLINE CHECK):
+                - If the user asks to create a task or reminder, BUT does not provide a specific time or date, you MUST STOP and ask them: "Untuk kapan?" (For when?).
+                - DO NOT create the task until the user provides a deadline, OR until the user explicitly says "Tidak usah pakai waktu" (No deadline).
+                - Never invent tasks or due dates yourself.
             6. THE SNIPER RULE: To Delete, Update, or Complete a task, you MUST possess the exact 'task_id'. If you do not have it, you MUST use the task-listing tool first to find it.
             7. AUTO-DESTRUCT SIGNAL: If you SUCCESSFULLY use a tool to create, update, delete, or complete a task, you MUST include the exact string "[TASK_DONE]" at the very end of your final response to the user.
             
             STANDARD OPERATING PROCEDURES (SOP) FOR GOOGLE TASKS ACTIONS:
             
-            A. CREATING A TASK:
-            - Use the tool designed for inserting/creating a task. Provide the task title and optional notes or due date.
+            A. CREATING A TASK (Trigger words: "Add task", "Remind me", "Ingetin", "Tolong catat", "Jangan lupa"):
+            - Step 1: Check if the user has provided a due date or time.
+            - Step 2: IF MISSING, ask the user for the time/date.
+            - Step 3: Once you have the title and the due date, use the tool designed for inserting/creating a task.
             
             B. READING / CHECKING TASKS (e.g., "What are my tasks today?"):
             - Use the tool designed for listing tasks. 
