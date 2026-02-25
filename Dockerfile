@@ -28,4 +28,4 @@ COPY --chown=user . $HOME/app
 
 # Start the NovaTasks Ephemeral AI Telegram Bot
 # Ensures it runs the correct slot-filling architecture file
-CMD ["python", "NovaTasks-AI-Telegram.py"]
+CMD ["python", "NovaTasks-AI.py"]
